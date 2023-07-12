@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import ProlemsList from "./routes/problem-list";
+import Problems from "./routes/problems";
 import ErrorPage from "./error-page";
+import "./styles/dark-mode.less";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProlemsList />,
+    element: <Problems />,
     errorElement: <ErrorPage />,
   },
 ]);
