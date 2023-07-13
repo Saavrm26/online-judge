@@ -1,0 +1,13 @@
+.git
+.gitignore
+
+.docker
+
+.env
+.venv
+venv
+venv/
+
+**/__pycache__
+
+env.sh
