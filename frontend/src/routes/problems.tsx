@@ -32,15 +32,13 @@ export default function Problems() {
   }
 
   return (
-    <Container >
-      <Content>
-        <Panel header="Search Problems" shaded>
-          <ProblemFilter handleSearch={handleSearch}></ProblemFilter>
-        </Panel>
-        <Panel header="Problems">
-          <ProblemsList problemList={problemList}></ProblemsList>
-        </Panel>
-      </Content>
-    </Container>
+    <Content>
+      <Panel header="Search Problems" shaded>
+        <ProblemFilter handleSearch={handleSearch}></ProblemFilter>
+      </Panel>
+      <Panel header="Problems">
+        <ProblemsList problemList={problemList}></ProblemsList>
+      </Panel>
+    </Content>
   );
 }
