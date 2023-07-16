@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from core import models
+from problem import models as problem_model
 
 
 class UserAdmin(BaseUserAdmin):
@@ -54,4 +55,11 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class ProblemAdmin(admin.ModelAdmin):
+    """ Defines the Problem page for admin """
+    ordering = ['id']
+    list_display = ['id', 'name', 'difficulty']
+
+
 admin.site.register(models.User, UserAdmin)
+admin.site.register(problem_model.Problem, ProblemAdmin)
