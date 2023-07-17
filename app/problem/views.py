@@ -44,7 +44,10 @@ class CreateProblemView(GenericAPIView, CreateModelMixin):
         permissions.IsAuthenticated & permissions.IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        print("starting")
+        ret = self.create(request, *args, **kwargs)
+        print(ret)
+        return ret
 
 
 class ModifyProblem(GenericAPIView, UpdateModelMixin, DestroyModelMixin):

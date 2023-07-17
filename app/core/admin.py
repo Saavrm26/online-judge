@@ -55,11 +55,26 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
+class TPjoin_inline(admin.TabularInline):
+    ordering = ['tag']
+    model = problem_model.TPjoin
+    extra = 1
+
+
 class ProblemAdmin(admin.ModelAdmin):
     """ Defines the Problem page for admin """
     ordering = ['id']
     list_display = ['id', 'name', 'difficulty']
+    inlines = [TPjoin_inline]
+    filter_horizontal = ['tags']
+
+
+class TagAdmin(admin.ModelAdmin):
+    """ Define the Tags page for admin """
+    list_display = ['name']
+    ordering = ['name']
 
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(problem_model.Problem, ProblemAdmin)
+admin.site.register(problem_model.Tag, TagAdmin)
