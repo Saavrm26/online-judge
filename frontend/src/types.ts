@@ -3,8 +3,9 @@ export interface Filter {
   tags: Array<string>;
 }
 
-export interface Problem {
-  problemName: string;
+export interface problem {
+  name: string;
+  statement?: string;
   difficulty: string;
   tags: Array<string>;
 }

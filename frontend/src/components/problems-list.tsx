@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
-import { Problem } from "../types";
+import { problem } from "../types";
 import { Table } from "rsuite";
 const { Column, HeaderCell, Cell } = Table;
 
 interface ProblemsListProps {
-  problemList: Array<Problem>;
+  problemList: Array<problem>;
 }
 
 const ProblemsList: FunctionComponent<ProblemsListProps> = ({
@@ -16,10 +16,11 @@ const ProblemsList: FunctionComponent<ProblemsListProps> = ({
       onRowClick={(rowData) => {
         console.log(rowData);
       }}
+      height={600}
     >
       <Column flexGrow={2}>
         <HeaderCell>Problem Name</HeaderCell>
-        <Cell dataKey="problemName" />
+        <Cell dataKey="name" />
       </Column>
 
       <Column flexGrow={2}>

@@ -1,4 +1,4 @@
-import { Content, FlexboxGrid, Panel } from "rsuite";
+import { FlexboxGrid, Panel } from "rsuite";
 import { Form, ButtonToolbar, Button } from "rsuite";
 import FlexboxGridItem from "rsuite/esm/FlexboxGrid/FlexboxGridItem";
 

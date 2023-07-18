@@ -1,9 +1,10 @@
 import { FormEvent, useEffect } from "react";
 import { useImmer } from "use-immer";
 import ProblemFilter from "../components/problem-filter";
-import { Filter, Problem } from "../types";
+import { Filter, problem } from "../types";
 import ProblemsList from "../components/problems-list";
-import { Container, Content, Divider, Panel } from "rsuite";
+import { Content, Panel } from "rsuite";
+import axios from "axios";
 
 export default function Problems() {
   const [filter, setFilter] = useImmer<Filter>({
@@ -11,19 +12,21 @@ export default function Problems() {
     tags: [],
   });
 
-  const [problemList, setProblemList] = useImmer<Array<Problem>>([]);
+  const [problemList, setProblemList] = useImmer<Array<problem>>([]);
 
   useEffect(() => {
-    // fetch problem list using api, using an example util backend has been developed
-    const response: Array<Problem> = [
-      {
-        problemName: "Two Sum",
-        difficulty: "easy",
-        tags: ["two pointer", " greedy"],
-      },
-      { problemName: "KnapSack", difficulty: "medium", tags: ["dp"] },
-    ];
-    setProblemList(response);
+    // fetch problem list using api, using an example util backend has been developed, localhost 8000 is only being used for development
+    // TODO: Add row click
+    const url = "http://localhost:8000/api/problem";
+    axios
+      .get<Array<problem>>(url)
+      .then((res) => {
+        console.log(res.data);
+        setProblemList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [filter, setProblemList]);
 
   function handleSearch(e: FormEvent, updatedFilter: Filter) {
@@ -32,13 +35,13 @@ export default function Problems() {
   }
 
   return (
-    <Content>
+    <>
       <Panel header="Search Problems" shaded>
         <ProblemFilter handleSearch={handleSearch}></ProblemFilter>
       </Panel>
-      <Panel header="Problems">
+      <Panel header="Problems" bodyFill={true}>
         <ProblemsList problemList={problemList}></ProblemsList>
       </Panel>
-    </Content>
+    </>
   );
 }

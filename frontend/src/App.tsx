@@ -5,13 +5,19 @@ import Login from "./routes/login";
 import { useImmer } from "use-immer";
 import Menu from "./components/menu";
 import Singup from "./routes/singup";
-import { Container, Content, Footer, Header, Stack } from "rsuite";
-import StackItem from "rsuite/esm/Stack/StackItem";
+import { Footer, Header } from "rsuite";
+import Problem from "./routes/problem";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Problems />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: '/:problemId',
+    element: <Problem />
+
   },
   {
     path: "/users/login",
@@ -26,13 +32,12 @@ const router = createBrowserRouter([
 export default function App() {
   const [activeKey, setActiveKey] = useImmer<string | null>(null);
   return (
-    <Container>
+    <>
       <Header>
         <Menu activeKey={activeKey} onSelect={setActiveKey} />{" "}
       </Header>
-      <Content>
-        <RouterProvider router={router} />
-      </Content>
-    </Container>
+      <RouterProvider router={router} />
+      <Footer></Footer>
+    </>
   );
 }
