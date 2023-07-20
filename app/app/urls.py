@@ -19,9 +19,11 @@ from drf_spectacular.views import (
 )
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from app.views import index
 
 urlpatterns = [
+    path('', index, name='index'),
     path('admin/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path(
@@ -30,5 +32,9 @@ urlpatterns = [
         name='api-docs',
     ),
     path('api/user/', include('user.urls')),
-    path('api/problem/', include('problem.urls'))
+    path('api/problem/', include('problem.urls')),
+    re_path(r'^users/', index, name='users'),
+    # path(r'^users/.*$', index, name='users'),
+    re_path(r'^problem/', index, name='problem'),
+
 ]

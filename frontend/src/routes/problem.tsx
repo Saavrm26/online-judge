@@ -35,6 +35,7 @@ export default function Problem() {
       .catch((err) => {
         console.log(err);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (!problemDetails) return <></>;
   const tags = (
@@ -54,7 +55,7 @@ export default function Problem() {
       <div style={{ margin: "4em" }}></div>
       <Row>
         <Col mdOffset={1} md={19}>
-          {problemDetails?.statement}
+          <p style={{fontSize:'17.0px'}}>{problemDetails?.statement}</p>
         </Col>
         <Col md={4}>
           <Stack

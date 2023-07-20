@@ -40,7 +40,6 @@ class ProblemSerializer(serializers.ModelSerializer):
         return data
 
     def to_representation(self, instance):
-        print("serializing")
         tags = [tag.name for tag in instance.tags.all()]
         dict_instance = {}
         dict_instance['id'] = instance.id

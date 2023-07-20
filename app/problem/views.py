@@ -27,7 +27,7 @@ class GetProblemView(GenericAPIView, RetrieveModelMixin):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        return self.retrieve(request, *args, **kwargs)
 
 
 class CreateProblemView(GenericAPIView, CreateModelMixin):

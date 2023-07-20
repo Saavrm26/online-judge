@@ -3,7 +3,7 @@ import { useImmer } from "use-immer";
 import ProblemFilter from "../components/problem-filter";
 import { Filter, problem } from "../types";
 import ProblemsList from "../components/problems-list";
-import { Content, Panel } from "rsuite";
+import { Panel } from "rsuite";
 import axios from "axios";
 
 export default function Problems() {
