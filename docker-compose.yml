@@ -4,10 +4,13 @@ services:
       context: .
       args:
         - DEV=true
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
+    expose:
+      - 8000
     volumes:
       - ./app:/app
+      - staticfiles:/app/static/
     env_file:
       - .env
     environment:
@@ -16,29 +19,51 @@ services:
       - DB_NAME=${POSTGRES_DB}
       - DB_USER=${POSTGRES_USER}
       - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - DEBUG=${DEBUG}
+    restart: always
     depends_on:
       db:
         condition: service_healthy
 
-    command: sh -c "python manage.py wait_for_db &&
-                    python manage.py migrate &&
-                    python manage.py runserver 0.0.0.0:8000"
+    command: sh -c 'python manage.py migrate &&
+      gunicorn -c gunicorn_config/config.py'
 
   db:
     image: postgres:15.3-alpine3.17
     volumes:
       - dev-db-data:/var/lib/postgresql/data
+      - ./db/pg_hba.conf:/home/pg_hba.conf
+    command: -c 'hba_file=/home/pg_hba.conf'
     env_file:
       - .env
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST_AUTH_METHOD=scram-sha-256
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
     healthcheck:
       test: sh -c "pg_isready -U ${POSTGRES_USER}"
       interval: 1s
       timeout: 1s
       retries: 5
 
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    depends_on:
+      - app
+
+    ports:
+      - 80:80
+
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - staticfiles:/home/app/staticfiles
+
 volumes:
   dev-db-data:
+  staticfiles:
